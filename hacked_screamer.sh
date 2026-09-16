@@ -149,6 +149,16 @@ padding=$(( (COLS - ${#WAIT_TEXT}) / 2 ))
 printf "%*s" "$padding" ""
 printf "%b%s%b" "$GREEN" "$WAIT_TEXT" "$RESET"
 
-read -n 1 -s -r </dev/tty || true
-echo
+WAIT_TEXT="Fenster schliesst sich in"
+COUNTDOWN=60
+
+for ((i = COUNTDOWN; i >= 1; i--)); do
+    padding=$(( (COLS - ${#WAIT_TEXT} - 4) / 2 ))
+    (( padding < 0 )) && padding=0
+    tput cup "$(( LINES - 2 ))" 0 2>/dev/null || true
+    printf "%*s" "$padding" ""
+    printf "%b%s %d Sekunden...%b" "$GREEN" "$WAIT_TEXT" "$i" "$RESET"
+    sleep 1
+done
+
 cleanup
