@@ -149,6 +149,6 @@ padding=$(( (COLS - ${#WAIT_TEXT}) / 2 ))
 printf "%*s" "$padding" ""
 printf "%b%s%b" "$GREEN" "$WAIT_TEXT" "$RESET"
 
-read -n 1 -s -r || true
+read -n 1 -s -r </dev/tty || true
 echo
 cleanup
